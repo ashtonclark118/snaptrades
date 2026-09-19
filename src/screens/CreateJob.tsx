@@ -49,7 +49,7 @@ export function CreateJob({ photos, customer, onPhotos, onCustomer, onBack, onNe
   return (
     <section>
       <h1>Tell us about the job</h1>
-      <p className="lead">A clear photo helps tradies decide if they can help.</p>
+      <p className="lead">Upload a photo — we'll generate a clear “what needs doing” summary, then find local tradies.</p>
 
       <div className="card">
         <label className="label">Photos</label>
@@ -153,7 +153,7 @@ export function CreateJob({ photos, customer, onPhotos, onCustomer, onBack, onNe
           Back
         </button>
         <button type="button" className="btn btn-primary" onClick={submit} style={{ flex: 1 }}>
-          Analyse job
+          Diagnose from photo
         </button>
       </div>
     </section>

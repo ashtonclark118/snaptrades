@@ -8,4 +8,10 @@ export default defineConfig({
     host: true,
     allowedHosts: true,
   },
+  optimizeDeps: {
+    exclude: ['@huggingface/transformers'],
+  },
+  worker: {
+    format: 'es',
+  },
 })

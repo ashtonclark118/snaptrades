@@ -5,32 +5,54 @@ import { tradeLabel } from '../data/tradespeople';
 interface Props {
   diagnosis: Diagnosis;
   analysing: boolean;
+  progressMsg?: string;
   onChange: (d: Diagnosis) => void;
   onBack: () => void;
   onNext: () => void;
 }
 
-export function Review({ diagnosis, analysing, onChange, onBack, onNext }: Props) {
+export function Review({
+  diagnosis,
+  analysing,
+  progressMsg,
+  onChange,
+  onBack,
+  onNext,
+}: Props) {
   if (analysing) {
     return (
       <section>
-        <h1>Looking at your job…</h1>
+        <h1>Looking at your photo…</h1>
         <div className="loading">
           <span className="spinner" aria-hidden />
-          Matching keywords and preparing a draft for tradies
+          {progressMsg ||
+            'Generating a clear “what needs doing” summary from your photo'}
         </div>
+        <p className="lead" style={{ marginTop: '1rem' }}>
+          First run may download a free on-device vision model. After that it stays
+          cached in your browser — no paid API.
+        </p>
       </section>
     );
   }
 
   const pct = Math.round(diagnosis.confidence * 100);
+  const fromPhoto = Boolean(diagnosis.generatedFromPhoto);
 
   return (
     <section>
       <h1>Does this look right?</h1>
       <p className="lead">
-        Our guess is based on your notes and photo names — edit anything before we find tradies.
+        {fromPhoto
+          ? 'We generated this from your photo — correct the trade or summary before we find local tradies.'
+          : 'Edit anything before we find tradies nearby.'}
       </p>
+
+      {fromPhoto && (
+        <div className="meta-row" style={{ marginBottom: '0.75rem' }}>
+          <span className="chip chip-photo">Generated from your photo</span>
+        </div>
+      )}
 
       <div className="card">
         <div className="field">
@@ -65,15 +87,18 @@ export function Review({ diagnosis, analysing, onChange, onBack, onNext }: Props
 
         <div className="field">
           <label className="label" htmlFor="desc">
-            Description for tradies
+            What needs doing
           </label>
           <textarea
             id="desc"
             className="textarea"
-            style={{ minHeight: 120 }}
+            style={{ minHeight: 140 }}
             value={diagnosis.description}
             onChange={(e) => onChange({ ...diagnosis, description: e.target.value })}
           />
+          <p className="hint-ok" style={{ marginTop: '0.35rem' }}>
+            Tradies will see this description — tweak it so it’s clear and accurate.
+          </p>
         </div>
 
         <div className="meta-row">

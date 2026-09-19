@@ -44,6 +44,7 @@ export default function App() {
   const [screen, setScreen] = useState<Screen>('landing');
   const [job, setJob] = useState<JobState>(emptyJob);
   const [analysing, setAnalysing] = useState(false);
+  const [progressMsg, setProgressMsg] = useState<string | undefined>();
   const [farNote, setFarNote] = useState<string | undefined>();
   const [hasStored, setHasStored] = useState(false);
   const [joined, setJoined] = useState<Tradie[]>([]);
@@ -68,6 +69,7 @@ export default function App() {
     setJob(emptyJob());
     setFarNote(undefined);
     setAnalysing(false);
+    setProgressMsg(undefined);
     setScreen('landing');
   }, []);
 
@@ -75,6 +77,7 @@ export default function App() {
     setJob(emptyJob());
     setFarNote(undefined);
     setAnalysing(false);
+    setProgressMsg(undefined);
     setScreen('create');
   }, []);
 
@@ -88,12 +91,12 @@ export default function App() {
 
   async function runAnalysis() {
     setAnalysing(true);
+    setProgressMsg('Reading your photo…');
     setScreen('review');
-    // Brief pause so the loading state is visible
-    await new Promise((r) => setTimeout(r, 450));
-    const diagnosis = await analyseJob(job.photos, job.customer.notes);
+    const diagnosis = await analyseJob(job.photos, job.customer.notes, setProgressMsg);
     setJob((j) => ({ ...j, diagnosis }));
     setAnalysing(false);
+    setProgressMsg(undefined);
   }
 
   function goToMatches() {
@@ -187,6 +190,7 @@ export default function App() {
         <Review
           diagnosis={job.diagnosis}
           analysing={analysing}
+          progressMsg={progressMsg}
           onChange={setDiagnosis}
           onBack={() => setScreen('create')}
           onNext={goToMatches}
@@ -201,8 +205,10 @@ export default function App() {
             confidence: 0,
             urgency: 'low',
             hints: [],
+            generatedFromPhoto: true,
           }}
           analysing
+          progressMsg={progressMsg}
           onChange={() => undefined}
           onBack={() => setScreen('create')}
           onNext={() => undefined}
@@ -251,4 +257,3 @@ export default function App() {
     </Layout>
   );
 }
-

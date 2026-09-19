@@ -552,6 +552,12 @@ h3 { font-size: 1.1rem; }
   border-color: rgba(201, 132, 42, 0.35);
 }
 
+.chip.chip-photo {
+  background: rgba(15, 143, 138, 0.14);
+  color: var(--leaf);
+  border-color: rgba(15, 143, 138, 0.35);
+}
+
 .hints-list {
   margin: 0.5rem 0 0;
   padding-left: 1.1rem;

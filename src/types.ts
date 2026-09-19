@@ -57,6 +57,8 @@ export interface Diagnosis {
   confidence: number;
   urgency: Urgency;
   hints: string[];
+  /** True when diagnosis used the uploaded photo (vision model and/or photo cues). */
+  generatedFromPhoto?: boolean;
 }
 
 export interface CustomerDetails {
