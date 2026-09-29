@@ -1,5 +1,5 @@
 import type { MatchedTradie } from '../types';
-import { tradeLabel } from '../data/tradespeople';
+import { googleReviewsUrl, tradeLabel } from '../data/tradespeople';
 
 interface Props {
   matches: MatchedTradie[];
@@ -98,6 +98,18 @@ export function Matches({
                 )}
                 {t.email ? <span>{t.email}</span> : <span className="muted">No email</span>}
               </div>
+              {t.real ? (
+                <a
+                  className="reviews-link"
+                  href={googleReviewsUrl(t)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  aria-label={`See Google reviews for ${t.name} (opens in a new tab)`}
+                >
+                  See Google reviews <span aria-hidden="true">↗</span>
+                </a>
+              ) : null}
             </div>
           </label>
         ))}

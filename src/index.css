@@ -503,6 +503,28 @@ h3 { font-size: 1.1rem; }
   text-decoration: none;
 }
 
+.reviews-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 32px;
+  margin-top: 0.45rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--forest);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.reviews-link:hover,
+.reviews-link:focus-visible {
+  border-color: var(--pop);
+  color: var(--pop);
+}
+
 .contact-list {
   display: flex;
   flex-direction: column;
