@@ -148,8 +148,8 @@ export function tradeLabel(trade: Trade): string {
     .join(' ');
 }
 
-/** Google Maps search for a live listing's public reviews. No ratings are stored or invented. */
+/** Google web search (shows the business profile panel) for a live listing's public reviews. No ratings are stored or invented. */
 export function googleReviewsUrl(t: Pick<Tradie, 'name' | 'town'>): string {
-  const query = `${t.name} ${t.town || 'Reading'} UK`;
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+  const query = `${t.name} ${t.town || 'Reading'} reviews`;
+  return `https://www.google.com/search?q=${encodeURIComponent(query)}`;
 }
