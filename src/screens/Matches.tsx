@@ -1,5 +1,6 @@
 import type { MatchedTradie } from '../types';
 import { googleReviewsUrl, tradeLabel } from '../data/tradespeople';
+import { trackEvent } from '../utils/analytics';
 
 interface Props {
   matches: MatchedTradie[];
@@ -89,7 +90,10 @@ export function Matches({
                   <a
                     className="call-btn"
                     href={telHref(t.phone)}
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      trackEvent('call-click');
+                    }}
                   >
                     Call {t.phone}
                   </a>
@@ -104,7 +108,10 @@ export function Matches({
                   href={googleReviewsUrl(t)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    trackEvent('reviews-click');
+                  }}
                   aria-label={`See Google reviews for ${t.name} (opens in a new tab)`}
                 >
                   See Google reviews <span aria-hidden="true">↗</span>

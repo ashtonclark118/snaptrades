@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import type { JobPhoto } from '../types';
+import { trackEvent } from '../utils/analytics';
 
 interface Props {
   photos: JobPhoto[];
@@ -32,6 +33,7 @@ export function PhotoCapture({ photos, onChange }: Props) {
       next.push(await readFile(file));
     }
     onChange(next);
+    if (next.length > photos.length) trackEvent('photo-uploaded');
     if (inputRef.current) inputRef.current.value = '';
   }
 

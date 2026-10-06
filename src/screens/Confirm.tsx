@@ -1,5 +1,6 @@
 import type { EmailDraft, MatchedTradie, SendReceipt } from '../types';
 import { buildMailto, makeReceipt } from '../utils/email';
+import { trackEvent } from '../utils/analytics';
 
 interface Props {
   email: EmailDraft;
@@ -88,7 +89,7 @@ export function Confirm({
                 </div>
               </div>
               {t.phone && (
-                <a className="call-btn" href={telHref(t.phone)}>
+                <a className="call-btn" href={telHref(t.phone)} onClick={() => trackEvent('call-click')}>
                   Call
                 </a>
               )}

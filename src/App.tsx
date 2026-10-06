@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Layout } from './components/Layout';
 import { Landing } from './screens/Landing';
 import { CreateJob } from './screens/CreateJob';
@@ -20,6 +20,7 @@ import type {
 import { analyseJob } from './utils/analyser';
 import { findNearbyTradies } from './utils/distance';
 import { buildEmail } from './utils/email';
+import { trackScreen } from './utils/analytics';
 import { loadLastJob, saveLastJob, loadJoinedTradies, saveJoinedTradie } from './utils/storage';
 
 const emptyCustomer = (): CustomerDetails => ({
@@ -53,6 +54,17 @@ export default function App() {
     setHasStored(Boolean(loadLastJob()));
     setJoined(loadJoinedTradies());
   }, []);
+
+  // Virtual pageviews for client-side screen changes. The initial landing view
+  // is already counted by GoatCounter's automatic pageview on load.
+  const firstScreen = useRef(true);
+  useEffect(() => {
+    if (firstScreen.current) {
+      firstScreen.current = false;
+      return;
+    }
+    trackScreen(screen);
+  }, [screen]);
 
   useEffect(() => {
     if (screen === 'landing') return;
